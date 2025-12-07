@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="canvas" width="192" height="192"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+ctx.fillStyle = '#f97316';
+ctx.fillRect(0, 0, 192, 192);
+ctx.fillStyle = 'white';
+ctx.font = 'bold 120px Arial';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('D', 96, 96);
+canvas.toBlob(blob => {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'pwa-192.png';
+  a.click();
+});
+</script>
+</body>
+</html>

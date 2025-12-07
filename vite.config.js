@@ -22,19 +22,20 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         scope: '/',
-        start_url: '/',
-        icons: [
-          {
-            src: '/icons/pwa-192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/icons/pwa-192.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
+        start_url: '/'
+        // Icons temporarily disabled - add proper PWA icons later
+        // icons: [
+        //   {
+        //     src: '/icons/pwa-192.png',
+        //     sizes: '192x192',
+        //     type: 'image/png'
+        //   },
+        //   {
+        //     src: '/icons/pwa-192.png',
+        //     sizes: '512x512',
+        //     type: 'image/png'
+        //   }
+        // ]
       },
       workbox: {
         runtimeCaching: [
