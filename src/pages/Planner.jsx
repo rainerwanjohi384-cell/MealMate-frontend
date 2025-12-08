@@ -6,12 +6,8 @@ const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 const MEAL_TYPES = ["breakfast", "lunch", "dinner"];
 
 export default function Planner() {
-  const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
+  const [weekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [meals, setMeals] = useState({});
-
-  useEffect(() => {
-    loadWeek();
-  }, [weekStart]);
 
   const loadWeek = async () => {
     try {
@@ -43,7 +39,8 @@ export default function Planner() {
         ...prev,
         [day]: { ...prev[day], [mealType]: recipe }
       }));
-    } catch (err) {
+    } catch (error) {
+      console.error("Error saving meal:", error);
       alert("Couldn't save that meal");
     }
   };

@@ -28,7 +28,8 @@ export default function RecipesList() {
     try {
       await api.delete(`/recipes/${id}`);
       setRecipes(recipes.filter(r => r.id !== id));
-    } catch (err) {
+    } catch (error) {
+      console.error("Failed to delete recipe:", error);
       alert("Failed to delete recipe");
     }
   };

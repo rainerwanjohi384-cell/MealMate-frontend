@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import { useState, useEffect } from "react";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Home from "./pages/Home";
@@ -7,6 +8,8 @@ import RecipesList from "./pages/RecipesList";
 import AddRecipe from "./pages/AddRecipe";
 import Planner from "./pages/Planner";
 import Layout from "./components/Layout";
+
+
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -24,6 +27,27 @@ function ProtectedRoute({ children }) {
 
 function App() {
   const { user } = useAuth();
+
+  useEffect(() => {
+    // Check if running as Chrome extension
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      // Send runtime message to background script
+      chrome.runtime.sendMessage({ greeting: "hello" })
+        .then(response => {
+          // Handle successful response
+          if (response && response.farewell) {
+            console.log(response.farewell);
+          }
+        })
+        .catch(error => {
+          // Handle the "Receiving end does not exist." error gracefully
+          console.warn("Could not establish connection. Receiver probably not active:", error.message);
+          // You might want to retry sending the message, or take other corrective actions
+        });
+    } else {
+      console.log("Not running as Chrome extension, skipping runtime message.");
+    }
+  }, []);
 
   return (
     <Router basename="/MealMate-frontend">

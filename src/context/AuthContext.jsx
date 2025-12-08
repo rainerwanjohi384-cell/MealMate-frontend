@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-
-const googleProvider = new GoogleAuthProvider();
+import { onIdTokenChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -11,6 +9,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const googleProvider = new GoogleAuthProvider();
 
   const signInWithGoogle = async () => {
     try {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const token = await firebaseUser.getIdToken();
         localStorage.setItem("token", token);

@@ -54,7 +54,8 @@ export default function AddRecipe() {
       const { secure_url } = await res.json();
       setImageUrl(secure_url);
       setPreview(secure_url);
-    } catch (err) {
+    } catch (error) {
+      console.error("Upload failed:", error);
       alert("Upload failed");
     } finally {
       setIsUploading(false);
